@@ -7,13 +7,15 @@ namespace AngleSharp.Css.Dom
     /// <summary>
     /// The nth-last-of-type selector.
     /// </summary>
-    sealed class LastTypeSelector : ChildSelector, ISelector
+    public sealed class LastTypeSelector : ChildSelector, ISelector
     {
+        /// <inheritdoc />
         public LastTypeSelector(Int32 step, Int32 offset, ISelector kind)
             : base(PseudoClassNames.NthLastOfType, step, offset, kind)
         {
         }
 
+        /// <inheritdoc />
         public Boolean Match(IElement element, IElement? scope)
         {
             var parent = element.ParentElement;

@@ -10,7 +10,7 @@ namespace AngleSharp.Css.Dom
     /// Represents a complex selector, i.e. one or more compound selectors
     /// separated by combinators.
     /// </summary>
-    sealed class ComplexSelector : ISelector
+    public sealed class ComplexSelector : ISelector
     {
         #region Fields
 
@@ -20,6 +20,9 @@ namespace AngleSharp.Css.Dom
 
         #region ctor
 
+        /// <summary>
+        /// Construct a complex selector
+        /// </summary>
         public ComplexSelector()
         {
             _combinators = new List<CombinatorSelector>();
@@ -29,6 +32,7 @@ namespace AngleSharp.Css.Dom
 
         #region Properties
 
+        /// <inheritdoc />
         public Priority Specificity
         {
             get
@@ -45,6 +49,7 @@ namespace AngleSharp.Css.Dom
             }
         }
 
+        /// <inheritdoc />
         public String Text
         {
             get
@@ -69,18 +74,21 @@ namespace AngleSharp.Css.Dom
             }
         }
 
+        /// <summary>
+        /// Gets the number of elements in the selector list
+        /// </summary>
         public Int32 Length => _combinators.Count;
 
-        public Boolean IsReady
-        {
-            get;
-            private set;
-        }
+        /// <summary>
+        /// Gets if the complex selector has completed parsing
+        /// </summary>
+        public Boolean IsReady { get; private set; }
 
         #endregion
 
         #region Methods
 
+        /// <inheritdoc />
         public void Accept(ISelectorVisitor visitor)
         {
             var selectors = _combinators.Select(m => m.Selector);
@@ -88,6 +96,7 @@ namespace AngleSharp.Css.Dom
             visitor.Combinator(selectors, symbols);
         }
 
+        /// <inheritdoc />
         public Boolean Match(IElement element, IElement? scope)
         {
             var last = _combinators.Count - 1;
@@ -100,7 +109,7 @@ namespace AngleSharp.Css.Dom
             return false;
         }
 
-        public void ConcludeSelector(ISelector selector)
+        internal void ConcludeSelector(ISelector selector)
         {
             if (!IsReady)
             {
@@ -114,7 +123,7 @@ namespace AngleSharp.Css.Dom
             }
         }
 
-        public void AppendSelector(ISelector selector, CssCombinator combinator)
+        internal void AppendSelector(ISelector selector, CssCombinator combinator)
         {
             if (!IsReady)
             {
@@ -137,7 +146,8 @@ namespace AngleSharp.Css.Dom
 
             foreach (var newElement in newElements)
             {
-                if (_combinators[pos].Selector.Match(newElement, scope) && (pos == 0 || MatchCascade(pos - 1, newElement, scope)))
+                if (_combinators[pos].Selector.Match(newElement, scope) &&
+                    (pos == 0 || MatchCascade(pos - 1, newElement, scope)))
                 {
                     return true;
                 }

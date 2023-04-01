@@ -7,13 +7,15 @@ namespace AngleSharp.Css.Dom
     /// <summary>
     /// The nth-last-column selector.
     /// </summary>
-    sealed class LastColumnSelector : ChildSelector, ISelector
+    public sealed class LastColumnSelector : ChildSelector, ISelector
     {
+        /// <inheritdoc />
         public LastColumnSelector(Int32 step, Int32 offset, ISelector kind)
             : base(PseudoClassNames.NthLastColumn, step, offset, kind)
         {
         }
 
+        /// <inheritdoc />
         public Boolean Match(IElement element, IElement? scope)
         {
             var parent = element.ParentElement;

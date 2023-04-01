@@ -7,13 +7,15 @@ namespace AngleSharp.Css.Dom
     /// Represents a group of selectors, i.e., zero or more selectors separated
     /// by commas.
     /// </summary>
-    sealed class ListSelector : Selectors, ISelector
+    public class ListSelector : Selectors, ISelector
     {
+        /// <inheritdoc />
         public void Accept(ISelectorVisitor visitor)
         {
             visitor.List(_selectors);
         }
 
+        /// <inheritdoc />
         public Boolean Match(IElement element, IElement? scope)
         {
             for (var i = 0; i < _selectors.Count; i++)
@@ -27,6 +29,7 @@ namespace AngleSharp.Css.Dom
             return false;
         }
 
+        /// <inheritdoc />
         protected override String Stringify()
         {
             var parts = new String[_selectors.Count];

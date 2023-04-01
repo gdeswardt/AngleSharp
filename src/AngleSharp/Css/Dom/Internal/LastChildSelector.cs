@@ -6,15 +6,18 @@ namespace AngleSharp.Css.Dom
     /// <summary>
     /// The nth-lastchild selector.
     /// </summary>
-    sealed class LastChildSelector : ChildSelector, ISelector
+    public sealed class LastChildSelector : ChildSelector, ISelector
     {
+        /// <inheritdoc />
         public LastChildSelector(Int32 step, Int32 offset, ISelector kind)
             : base(PseudoClassNames.NthLastChild, step, offset, kind)
         {
         }
 
+        /// <inheritdoc />
         protected override Boolean IncludeParameterInSpecificity => true;
 
+        /// <inheritdoc />
         public Boolean Match(IElement element, IElement? scope)
         {
             var parent = element.ParentElement;

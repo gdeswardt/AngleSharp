@@ -7,13 +7,15 @@ namespace AngleSharp.Css.Dom
     /// <summary>
     /// The nth-of-type selector.
     /// </summary>
-    sealed class FirstTypeSelector : ChildSelector, ISelector
+    public sealed class FirstTypeSelector : ChildSelector, ISelector
     {
+        /// <inheritdoc />
         public FirstTypeSelector(Int32 step, Int32 offset, ISelector kind)
             : base(PseudoClassNames.NthOfType, step, offset, kind)
         {
         }
 
+        /// <inheritdoc />
         public Boolean Match(IElement element, IElement? scope)
         {
             var parent = element.ParentElement;
